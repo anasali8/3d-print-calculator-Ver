@@ -1,6 +1,15 @@
 import { get, put } from '@vercel/blob';
-import { defaultConfig, validateMaterials, validateSettings } from './pricing';
-import type { Config, Material, PricingSettings } from './types';
+import {
+  defaultConfig,
+  validateMaterials,
+  validateSettings
+} from './pricing.ts';
+
+import type {
+  Config,
+  Material,
+  PricingSettings
+} from './types.ts';
 
 // Separate objects prevent a materials save from overwriting pricing settings.
 const MATERIALS = 'layerprice/materials.json';
