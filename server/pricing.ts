@@ -1,6 +1,11 @@
-import type { Config, Material, PricingSettings } from './types';
+import type { Config, Material, PricingSettings } from './types.ts';
 export const defaultConfig:Config={materials:[{id:'pla',name:'PLA',colors:['Black','White','Red','Blue'],active:true,costPerGram:0.5,sellingPricePerGram:1.5},{id:'petg',name:'PETG',colors:['Black','White','Red'],active:true,costPerGram:0.8,sellingPricePerGram:2},{id:'abs',name:'ABS',colors:['Black','White'],active:true,costPerGram:0.6,sellingPricePerGram:1.7}],settings:{mode:'fixed',hourlyRate:10,markupPercent:30}};
-const bad=(message:string):never=>{const e=new Error(message);e.name='ValidationError';throw e};
+
+function bad(message: string): never {
+  const error = new Error(message);
+  error.name = 'ValidationError';
+  throw error;
+}
 const money=(n:number)=>Math.round((n+Number.EPSILON)*100)/100;
 const amount=(x:unknown,max=1e9):x is number=>typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=max;
 export const safeCatalog=(config:Config)=>({materials:config.materials.filter(m=>m.active).map(({id,name,colors})=>({id,name,colors}))});
