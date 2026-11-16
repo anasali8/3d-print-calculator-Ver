@@ -57,7 +57,18 @@ export function createHandler(storage: Storage) {
       return json({error:'Not found'}, 404);
     } catch (error) {
       if (error instanceof Error && error.name === 'ValidationError') return json({error:error.message}, 400);
-      console.error('LayerPrice API:', error instanceof Error ? error.name : 'Unknown error');
+      console.error('LayerPrice API:', {
+        route,
+        name: error instanceof Error
+          ? error.name
+          : 'UnknownError',
+        message: error instanceof Error
+          ? error.message
+          : String(error),
+        stack: error instanceof Error
+          ? error.stack
+          : undefined
+      });
       return json({error:'Server error. Please retry.'}, 500);
     }
   };
